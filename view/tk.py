@@ -1,7 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from db.models.customer import Customer
+from db.models.order import Order
+from db.models.product import Product
 
+from db.db_connection import Session
 
 
 # class Grid(ttk.Treeview):
@@ -49,8 +53,22 @@ buttons_list = [[],[],[]]
 col = 0
 
 def click00():
-    text = entries[0][0].get()
-    messagebox.showinfo("Message","text")
+    name = entries[0][0].get()
+    email = entries[0][1].get()
+    try:
+        age = int(entries[0][2].get())
+    except:
+        messagebox.showinfo("Message", "Wrong age")
+        return
+    address = entries[0][3].get()
+    with Session as db:
+        customer = Customer()
+        customer.name = name
+        customer.email = email
+        customer.age = age
+        customer.address = address
+        db.add(customer)
+        db.commit()
 
 
 func = [click00]
@@ -69,22 +87,31 @@ for i in tabs:
 count = 0
 entries = [[],[],[]]
 for i in columnsCustomer:
+    if count == 0:
+        count += 1
+        continue
     entry = tk.Entry(tabCustomer)
-    entry.place(relx=0.15 + 0.15*count, rely=0.7)
+    entry.place(relx=0.07 + 0.15*count, rely=0.7)
     entries[0].append(entry)
     count += 1
 
 count = 0
 for i in columnsItem:
+    if count == 0:
+        count += 1
+        continue
     entry = tk.Entry(tabItem)
-    entry.place(relx=0.15 + 0.15*count, rely=0.7)
+    entry.place(relx=0.07 + 0.15*count, rely=0.7)
     entries[1].append(entry)
     count += 1
 
 count = 0
 for i in columnsOrder:
+    if count == 0:
+        count += 1
+        continue
     entry = tk.Entry(tabOrder)
-    entry.place(relx=0.15 + 0.15*count, rely=0.7)
+    entry.place(relx=0.07 + 0.2*count, rely=0.7)
     entries[2].append(entry)
     count += 1
 tabControl.pack(expand=1, fill="both")

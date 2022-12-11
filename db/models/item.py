@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.orm import relationship
 from db.db_context import Base
 
 class Item(Base):
@@ -8,5 +9,4 @@ class Item(Base):
     sku = Column(String)
     price = Column(Float)
     category = Column(String)
-
-print ("log")
+    orders = relationship("Order", back_populates="item")

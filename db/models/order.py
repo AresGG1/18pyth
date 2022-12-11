@@ -7,8 +7,8 @@ class Order(Base):
     __tablename__ = "orders"
     order_id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    sum = Column(Integer)
+    quantity =  Column(Integer)
     customer_id = Column(Integer, ForeignKey("customers.customer_id"))
     customer = relationship("Customer", back_populates="orders")
-    item_id = Column(Integer, ForeignKey("items.item_id"))
-    item = relationship("Item", back_populates="orders")
+    product_id = Column(Integer, ForeignKey("items.product_id"))
+    product = relationship("Product", back_populates="orders")

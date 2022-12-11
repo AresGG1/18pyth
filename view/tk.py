@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from db.models.customer import Customer
+from sqlalchemy.orm import Session
 from db.models.order import Order
 from db.models.product import Product
-
-from db.db_connection import Session
+from db.db_connection import create_tables, engine
 
 
 # class Grid(ttk.Treeview):
@@ -21,6 +21,7 @@ class App(tk.Tk):
 
 
 main = App()
+create_tables(engine)
 tabControl = ttk.Notebook(main)
 tabCustomer = ttk.Frame(tabControl)
 tabItem = ttk.Frame(tabControl)
@@ -61,7 +62,7 @@ def click00():
         messagebox.showinfo("Message", "Wrong age")
         return
     address = entries[0][3].get()
-    with Session as db:
+    with Session(autoflush=False, bind=engine) as db:
         customer = Customer()
         customer.name = name
         customer.email = email

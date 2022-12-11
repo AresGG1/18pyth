@@ -10,5 +10,5 @@ class Order(Base):
     quantity =  Column(Integer)
     customer_id = Column(Integer, ForeignKey("customers.customer_id"))
     customer = relationship("Customer", back_populates="orders")
-    product_id = Column(Integer, ForeignKey("items.product_id"))
+    product_id = Column(Integer, ForeignKey("products.product_id"))
     product = relationship("Product", back_populates="orders")

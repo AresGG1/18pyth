@@ -4,7 +4,7 @@ from db.db_context import Base
 
 class Product(Base):
     __tablename__ = "products"
-    product = Column(Integer, primary_key=True, index=True)
+    product_id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
     sku = Column(String)
     price = Column(Float)
